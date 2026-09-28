@@ -1,0 +1,6 @@
+﻿=== probe13 FINAL ===
+found at 0s
+settled: 50x50
+style: 0x940B0000
+wndlog exists: False
+done
