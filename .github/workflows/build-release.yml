@@ -1,0 +1,53 @@
+name: Build Windows Release
+
+on:
+  push:
+    tags:
+      - 'v*'          # 推送 v1.0.0 这类标签时触发
+  workflow_dispatch:   # 也支持手动触发
+
+permissions:
+  contents: write      # 创建 Release 需要写权限
+
+jobs:
+  build-windows:
+    runs-on: windows-latest   # 使用 Windows 运行器
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build Windows Release
+        run: flutter build windows --release
+
+      - name: Get version from pubspec
+        id: version
+        shell: pwsh
+        run: |
+          $yaml = Get-Content pubspec.yaml
+          $version = ($yaml | Select-String "version:\s*(.+)").Matches.Groups[1].Value
+          echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Package Release
+        shell: pwsh
+        run: |
+          Compress-Archive -Path build/windows/x64/runner/Release/* `
+            -DestinationPath melodica-${{ steps.version.outputs.VERSION }}.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: melodica-${{ steps.version.outputs.VERSION }}.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
