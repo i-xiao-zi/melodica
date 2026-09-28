@@ -1,17 +1,31 @@
-# melodica
+# 口风琴
 
-A new Flutter project.
+```agsl
+将《歌曲》的简谱跟据以下示例格式生成口风琴乐谱：
 
-## Getting Started
+0(600) 0(600) | 起拍
+1(300) 1(300) 5(300) 5(300) 6(300) 6(300) 5(1200) | 前奏·亮晶晶
+4(300) 4(300) 3(300) 3(300) 2(300) 2(300) 1(1200) | 前奏·小星星
+1(300) 1(300) 5(300) 5(300) 6(300) 6(300) 5(1200) | 一闪一闪亮晶晶
+4(300) 4(300) 3(300) 3(300) 2(300) 2(300) 1(1200) | 满天都是小星星
+5(300) 5(300) 4(300) 4(300) 3(300) 3(300) 2(1200) | 挂在天上放光明
+5(300) 5(300) 4(300) 4(300) 3(300) 3(300) 2(1200) | 好像许多小眼睛
+1(300) 1(300) 5(300) 5(300) 6(300) 6(300) 5(1200) | 一闪一闪亮晶晶
+4(300) 4(300) 3(300) 3(300) 2(300) 2(300) 1(1200) | 满天都是小星星
+1(300) 1(300) 5(300) 5(300) 6(300) 6(300) 5(1200) | 第二遍·亮晶晶
+4(300) 4(300) 3(300) 3(300) 2(300) 2(300) 1(1200) | 满天都是小星星
+5(300) 5(300) 4(300) 4(300) 3(300) 3(300) 2(1200) | 挂在天上放光明
+5(300) 5(300) 4(300) 4(300) 3(300) 3(300) 2(1200) | 好像许多小眼睛
+1(300) 1(300) 5(300) 5(300) 6(300) 6(300) 5(1200) | 一闪一闪亮晶晶
+4(300) 4(300) 3(300) 3(300) 2(300) 2(300) 1(1800) | 满天都是小星星·尾音
+0(600) | 尾奏
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+其中 0表示不发音
+1,2,3,4,5,6,7,
+i表示音符，
+_表示降调，
+^表示声调，
+#表示半音，
+(time)表示持续time毫秒，
+|分割乐谱和歌词
+```
