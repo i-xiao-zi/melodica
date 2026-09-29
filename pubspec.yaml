@@ -1,7 +1,7 @@
 name: melodica
 description: "A new Flutter project."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1
 environment:
   sdk: ^3.12.2
 dependencies:
@@ -23,5 +23,10 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/tray.png
+    - assets/
+
 assets:
+  - assets/images/tray.png
   - assets/

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -9,13 +11,12 @@ class Tray with TrayListener {
     tray.setToolTip("口风琴");
     tray.setContextMenu(_contextMenu);
     tray.addListener(this);
+    Logger().t(Image.asset('assets/images/tray.png'));
   }
 
   Menu get _contextMenu => Menu(
     items: [
-      MenuItem(label: '数学'),
-      MenuItem.separator(),
-      MenuItem(label: '添加曲谱'),
+      MenuItem(label: '主页', onClick: _hide, icon: 'assets/images/home.png'),
       MenuItem.separator(),
       MenuItem(label: '退出', onClick: _quit),
     ]
@@ -23,7 +24,7 @@ class Tray with TrayListener {
 
   @override
   void onTrayIconMouseDown() {
-    tray.popUpContextMenu();
+    windowManager.show();
   }
 
   @override
@@ -33,6 +34,14 @@ class Tray with TrayListener {
 
   @override
   void onTrayIconRightMouseUp() {}
+
+  Future<void> _hide(MenuItem item) async {
+    if(await windowManager.isVisible()) {
+      await windowManager.hide();
+    } else {
+      await windowManager.show();
+    }
+  }
 
   Future<void> _quit(MenuItem item) async {
     await windowManager.close();

@@ -179,9 +179,11 @@ class Player {
       _start(_time!);
     }
     playing = true;
+    _sender?.send(WorkerMessage(WorkerMessageType.play, name));
   }
   static void pause(String? name) {
     playing = false;
+    _sender?.send(WorkerMessage(WorkerMessageType.pause, name));
   }
   static Directory get _musicDir => Directory(join(File(Platform.resolvedExecutable).parent.path, 'music'));
   static List<String> get musics => _musicDir.listSync().map((f) => basename(f.path)).toList();

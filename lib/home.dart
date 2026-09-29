@@ -21,16 +21,31 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     windowManager.setAsFrameless();
-    windowManager.setSize(Size(150, 300));
+    windowManager.setSize(Size(200, 300));
     windowManager.setAlignment(Alignment(-0.95, 0));
     windowManager.setBackgroundColor(Colors.transparent);
     Worker.start((message){
       switch (message.type) {
         case WorkerMessageType.complete:
+          windowManager.setIgnoreMouseEvents(false);
           setState(() {
             _music = null;
             _playing = null;
             _lyric = '';
+          });
+          break;
+        case WorkerMessageType.play:
+          windowManager.setIgnoreMouseEvents(true);
+          setState(() {
+            _music = message.data;
+            _playing = true;
+          });
+          break;
+        case WorkerMessageType.pause:
+          windowManager.setIgnoreMouseEvents(false);
+          setState(() {
+            _music = message.data;
+            _playing = false;
           });
           break;
         case WorkerMessageType.lyric:
@@ -47,9 +62,6 @@ class _HomePageState extends State<HomePage> {
         if(['Tab'].contains(message.data)){
           if(_playing == true && _music != null && _music!.isNotEmpty) {
             Worker.send(WorkerMessage(WorkerMessageType.pause, _music));
-            setState(() {
-              _playing = false;
-            });
           }
         }
       }
@@ -83,12 +95,7 @@ class _HomePageState extends State<HomePage> {
                     contentPadding: EdgeInsetsGeometry.symmetric(horizontal: 1.0),
                     title: Text(music),
                     onTap: (){
-                      Worker.send(WorkerMessage(_playing == true ? WorkerMessageType.pause : WorkerMessageType.play, music));
-                      windowManager.setIgnoreMouseEvents(_playing != true);
-                      setState(() {
-                        _music = music;
-                        _playing = _playing == true ? false : true;
-                      });
+                      Worker.send(WorkerMessage(WorkerMessageType.play, music));
                     },
                   ),
                 ))).toList(),
